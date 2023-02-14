@@ -22,8 +22,10 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: "yarn"
+
       - name: Install dependencies
         run: yarn --frozen-lockfile
+
       - name: Build
         run: yarn build
 
@@ -52,3 +54,6 @@ jobs:
 
       - name: Run unit tests
         run: yarn test:ci
+
+      - name: Run e2e tests
+        run: yarn e2e:headless
