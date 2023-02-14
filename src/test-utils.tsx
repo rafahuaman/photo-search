@@ -2,7 +2,7 @@ import React, { ReactElement } from "react";
 import { render, RenderOptions } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ChakraProvider } from "@chakra-ui/react";
-import { setMedia } from "mock-match-media/dist";
+import { setMedia } from "mock-match-media";
 
 export const queryClient = new QueryClient({
   defaultOptions: {
