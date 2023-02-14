@@ -13,7 +13,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <QueryClientProvider client={queryClient}>
       <Hydrate state={pageProps.dehydratedState}>
         <ChakraProvider>
-          <Component {...pageProps} />;
+          <Component {...pageProps} />
         </ChakraProvider>
       </Hydrate>
     </QueryClientProvider>
