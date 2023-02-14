@@ -4,12 +4,17 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "dev:test": "NODE_ENV=test next dev -p 3099",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "prepare": "husky install",
     "test": "jest",
-    "test:ci": "jest --ci"
+    "test:ci": "jest --ci",
+    "cypress": "cypress open",
+    "cypress:headless": "cypress run",
+    "e2e": "start-server-and-test dev:test http://localhost:3099 cypress",
+    "e2e:headless": "start-server-and-test dev:test http://localhost:3099 cypress:headless"
   },
   "dependencies": {
     "@chakra-ui/react": "^2.5.0",
@@ -17,6 +22,7 @@
     "@emotion/styled": "^11.10.5",
     "@next/font": "13.1.6",
     "@tanstack/react-query": "^4.24.6",
+    "@testing-library/cypress": "^9.0.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.4.3",
@@ -26,9 +32,11 @@
     "@typescript-eslint/eslint-plugin": "^5.52.0",
     "@typescript-eslint/parser": "^5.52.0",
     "add": "^2.0.6",
+    "cypress": "^12.5.1",
     "eslint": "8.34.0",
     "eslint-config-next": "13.1.6",
     "eslint-config-prettier": "^8.6.0",
+    "eslint-plugin-cypress": "^2.12.1",
     "eslint-plugin-jest": "^27.2.1",
     "eslint-plugin-jest-dom": "^4.0.3",
     "eslint-plugin-jest-formatting": "^3.1.0",
@@ -44,6 +52,7 @@
     "prettier": "^2.8.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "start-server-and-test": "^1.15.4",
     "typescript": "4.9.5",
     "yarn": "^1.22.19"
   }
