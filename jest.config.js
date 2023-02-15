@@ -30,6 +30,8 @@ const customJestConfig = {
     "!./src/**/_*.{js,jsx,ts,tsx}",
     "!**/*.d.ts",
     "!**/node_modules/**",
+    "!**/mockData/**",
+    "!**/test-utils.tsx",
   ],
 };
 
