@@ -927,6 +927,11 @@
     "@chakra-ui/react-use-previous" "2.0.5"
     "@chakra-ui/shared-utils" "2.0.5"
 
+"@chakra-ui/skip-nav@^2.0.15":
+  version "2.0.15"
+  resolved "https://registry.yarnpkg.com/@chakra-ui/skip-nav/-/skip-nav-2.0.15.tgz#cb3b2ffb9c1bc492e66d6b0a189253aa53014257"
+  integrity sha512-5UtmlnV4BmIgEk6lQ0h81JEYhPX04wJEk5ZMoilQ2zEQYL6TkVVHkhRXyc1Zfq76hmHuZPXZV/yJeTecj6jIrA==
+
 "@chakra-ui/slider@2.0.21":
   version "2.0.21"
   resolved "https://registry.yarnpkg.com/@chakra-ui/slider/-/slider-2.0.21.tgz#f65b15bf0d5f827699ff9a2d6faee35006e2bfce"
