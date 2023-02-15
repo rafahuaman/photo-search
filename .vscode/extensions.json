@@ -1,0 +1,12 @@
+{
+  "recommendations": [
+    "streetsidesoftware.code-spell-checker",
+    "dbaeumer.vscode-eslint",
+    "nhoizey.gremlins",
+    "visualstudioexptteam.vscodeintellicode",
+    "firsttris.vscode-jest-runner",
+    "davidanson.vscode-markdownlint",
+    "esbenp.prettier-vscode",
+    "wix.vscode-import-cost"
+  ]
+}
