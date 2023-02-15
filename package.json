@@ -17,6 +17,7 @@
     "e2e:headless": "start-server-and-test dev:test http://localhost:3099 cypress:headless"
   },
   "dependencies": {
+    "@chakra-ui/icons": "^2.0.17",
     "@chakra-ui/react": "^2.5.0",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
