@@ -16,6 +16,8 @@ type PhotosResponse = {
   perPage: number;
   photos: Photo[];
 };
+// const PHOTOS_PER_PAGE_DEFAULT = 10;
+// const PAGE_DEFAULT = 1;
 
 export default async function handler(
   req: NextApiRequest,
@@ -23,7 +25,10 @@ export default async function handler(
 ) {
   const pexelsClient = createClient(PEXELS_API_KEY);
   try {
-    const curatedPhotos = (await pexelsClient.photos.curated()) as PexelsPhotos;
+    const curatedPhotos = (await pexelsClient.photos.curated({
+      page: 1,
+      per_page: 10,
+    })) as PexelsPhotos;
     const result = {
       page: curatedPhotos.page,
       perPage: curatedPhotos.per_page,

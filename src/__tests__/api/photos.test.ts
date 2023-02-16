@@ -4,7 +4,7 @@ import { createMocks } from "node-mocks-http";
 
 describe("/api/photos", () => {
   describe("/curated", () => {
-    test("returns a message with the specified animal", async () => {
+    it("returns curated photos", async () => {
       const { req, res } = createMocks({
         method: "GET",
       });
@@ -37,6 +37,39 @@ describe("/api/photos", () => {
           ],
         })
       );
+    });
+
+    it("calls the Pexels Curated Photos API with the API Key", async () => {
+      const { req, res } = createMocks({
+        method: "GET",
+      });
+      fetchMock.once(JSON.stringify(mockPexelsCuratedPhotosResponse));
+
+      await photosHandler(req, res);
+
+      expect(fetch).toHaveBeenCalledWith(
+        "https://api.pexels.com/v1//curated?page=1&per_page=10",
+        {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            Authorization: "SOME_KEY",
+            "Content-Type": "application/json",
+            "User-Agent": "Pexels/JavaScript",
+          },
+        }
+      );
+    });
+
+    it("returns a 500 when the call to Pexels API fails", async () => {
+      const { req, res } = createMocks({
+        method: "GET",
+      });
+      fetchMock.mockRejectOnce();
+
+      await photosHandler(req, res);
+
+      expect(res._getStatusCode()).toBe(500);
     });
   });
 });
