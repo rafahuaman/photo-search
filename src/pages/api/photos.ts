@@ -9,39 +9,52 @@ type ErrorResponse = {
 
 type Photo = {
   id: number;
+  alt: string;
+  url: string;
+  photographerName: string;
+  photographerUrl: string;
 };
 
-type PhotosResponse = {
+export type PhotosResponse = {
   page: number;
   perPage: number;
   photos: Photo[];
 };
 // const PHOTOS_PER_PAGE_DEFAULT = 10;
-// const PAGE_DEFAULT = 1;
+const PAGE_DEFAULT = 1;
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<PhotosResponse | ErrorResponse>
 ) {
-  const pexelsClient = createClient(PEXELS_API_KEY);
+  const { page } = req.query;
   try {
-    const curatedPhotos = (await pexelsClient.photos.curated({
-      page: 1,
-      per_page: 10,
-    })) as PexelsPhotos;
-    const result = {
-      page: curatedPhotos.page,
-      perPage: curatedPhotos.per_page,
-      photos: curatedPhotos.photos.map((photo) => ({
-        id: photo.id,
-        alt: photo.alt,
-        url: photo.src.large,
-        photographerName: photo.photographer,
-        photographerUrl: photo.photographer_url,
-      })),
-    };
+    const result = await fetchCuratedPhotosServer(Number(page));
     res.status(200).json(result);
   } catch (error) {
     res.status(500).send({ message: "Internal Server Error." });
   }
+}
+
+export async function fetchCuratedPhotosServer(
+  page: number
+): Promise<PhotosResponse> {
+  const pexelsClient = createClient(PEXELS_API_KEY);
+
+  const curatedPhotos = (await pexelsClient.photos.curated({
+    page: page || PAGE_DEFAULT,
+    per_page: 10,
+  })) as PexelsPhotos;
+  const result = {
+    page: curatedPhotos.page,
+    perPage: curatedPhotos.per_page,
+    photos: curatedPhotos.photos.map((photo) => ({
+      id: photo.id,
+      alt: photo.alt || "",
+      url: photo.src.large,
+      photographerName: photo.photographer,
+      photographerUrl: photo.photographer_url,
+    })),
+  };
+  return result;
 }
