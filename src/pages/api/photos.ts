@@ -27,6 +27,10 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<PhotosResponse | ErrorResponse>
 ) {
+  res.setHeader(
+    "Cache-Control",
+    "public, s-maxage=10, stale-while-revalidate=59"
+  );
   const { page } = req.query;
   try {
     const result = await fetchCuratedPhotosServer(Number(page));
