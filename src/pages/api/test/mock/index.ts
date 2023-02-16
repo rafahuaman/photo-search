@@ -14,6 +14,10 @@ export default async function handler(
     body,
   } = JSON.parse(req.body);
 
+  if (process.env.NODE_ENV === "production") {
+    return res.status(404).send("not found");
+  }
+
   const method = (methodParam as string).toUpperCase();
   const hostname = hostnameParam as string;
   const path = pathParam as string;
