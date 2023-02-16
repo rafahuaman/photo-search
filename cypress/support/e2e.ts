@@ -18,3 +18,10 @@ import "./commands";
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+
+beforeEach(() => {
+  // Prevent unmocked server-side external HTTP requests.
+  cy.disableNetConnect();
+  // Clean server-side external HTTP request mocks.
+  cy.resetServerInterceptors();
+});

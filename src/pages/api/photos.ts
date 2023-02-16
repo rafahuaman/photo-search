@@ -45,6 +45,7 @@ export async function fetchCuratedPhotosServer(
     page: page || PAGE_DEFAULT,
     per_page: 10,
   })) as PexelsPhotos;
+
   const result = {
     page: curatedPhotos.page,
     perPage: curatedPhotos.per_page,

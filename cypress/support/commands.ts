@@ -37,3 +37,26 @@
 // }
 
 import "@testing-library/cypress/add-commands";
+import { MockParams } from ".";
+
+Cypress.Commands.add("interceptServer", (mockParams: MockParams) => {
+  return cy.request({
+    url: "/api/test/mock",
+    method: "POST",
+    body: JSON.stringify(mockParams),
+  });
+});
+
+Cypress.Commands.add("disableNetConnect", () => {
+  return cy.request({
+    url: "/api/test/disable-net-connect",
+    method: "POST",
+  });
+});
+
+Cypress.Commands.add("resetServerInterceptors", () => {
+  return cy.request({
+    url: "/api/test/mock/reset",
+    method: "POST",
+  });
+});

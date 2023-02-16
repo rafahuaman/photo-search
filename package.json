@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "dev:test": "NODE_ENV=test next dev -p 3099",
+    "dev:test": "NODE_OPTIONS='--no-experimental-fetch' NODE_ENV=test next dev -p 3099",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -13,8 +13,8 @@
     "test:ci": "jest --ci",
     "cypress": "cypress open",
     "cypress:headless": "cypress run",
-    "e2e": "start-server-and-test dev:test http://localhost:3099 cypress",
-    "e2e:headless": "start-server-and-test dev:test http://localhost:3099 cypress:headless"
+    "e2e": "start-server-and-test dev:test http://localhost:3099/api/health cypress",
+    "e2e:headless": "start-server-and-test dev:test http://localhost:3099/api/health cypress:headless"
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.0.17",
@@ -52,6 +52,7 @@
     "lint-staged": "^13.1.2",
     "mock-match-media": "^0.4.2",
     "next": "13.1.6",
+    "nock": "^13.3.0",
     "node-mocks-http": "^1.12.1",
     "pexels": "^1.4.0",
     "prettier": "^2.8.4",
