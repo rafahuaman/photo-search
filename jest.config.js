@@ -31,6 +31,7 @@ const customJestConfig = {
     "!**/*.d.ts",
     "!**/node_modules/**",
     "!**/mockData/**",
+    "!**/pages/api/test/**",
     "!**/test-utils.tsx",
     "!**/Providers.tsx",
   ],

@@ -23,6 +23,13 @@ export default function Home() {
     });
   };
 
+  const handlePrevious = () => {
+    router.push({ pathname: "/", query: { page: page - 1 } }, undefined, {
+      shallow: true,
+      scroll: true,
+    });
+  };
+
   return (
     <>
       <Head>
@@ -48,7 +55,7 @@ export default function Home() {
         </VStack>
 
         {showPrevious && (
-          <Button colorScheme="teal" variant="outline">
+          <Button colorScheme="teal" variant="outline" onClick={handlePrevious}>
             Previous
           </Button>
         )}

@@ -15,6 +15,9 @@ beforeEach(() => {
   // Reset Mock Router
   mockRouter.setCurrentUrl("/");
 
+  // Reset fetch Mocks
+  fetchMock.resetMocks();
+
   // Mobile-first: all tests are run on a mobile screen by default
   mockMatchMedia.cleanup();
   setMobileScreen();

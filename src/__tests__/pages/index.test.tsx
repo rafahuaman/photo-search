@@ -76,7 +76,68 @@ describe("Home", () => {
         const user = userEvent.setup();
         user.click(screen.getByRole("button", { name: /next/i }));
 
-        expect(fetchMock).toHaveBeenCalledWith("/api/photos?page=2");
+        await waitFor(() =>
+          expect(fetchMock).toHaveBeenCalledWith("/api/photos?page=2")
+        );
+      });
+    });
+
+    describe("clicking Previous", () => {
+      beforeEach(() => {
+        const page = 2;
+        queryClient.setQueryData([USE_CURATED_PHOTOS_KEY, page], {
+          ...mockCuratedPhotosSecondPageResponse,
+          hasNext: true,
+        });
+        mockRouter.setCurrentUrl("/?page=2");
+      });
+
+      it("displays the previous page when the user clicks Previous", async () => {
+        render(<Home />);
+
+        fetchMock.once(JSON.stringify(mockCuratedPhotosResponse));
+        const user = userEvent.setup();
+        user.click(screen.getByRole("button", { name: /previous/i }));
+
+        await waitFor(() =>
+          expect(
+            screen.queryByTestId(
+              `photo-card-${mockCuratedPhotosSecondPageResponse.photos[0].id}`
+            )
+          ).not.toBeInTheDocument()
+        );
+
+        expect(
+          await screen.findByTestId(
+            `photo-card-${mockCuratedPhotosResponse.photos[0].id}`
+          )
+        ).toBeInTheDocument();
+      });
+
+      it("decreases the page param by 1", async () => {
+        render(<Home />);
+
+        fetchMock.once(JSON.stringify(mockCuratedPhotosSecondPageResponse));
+        const user = userEvent.setup();
+        user.click(screen.getByRole("button", { name: /previous/i }));
+
+        await waitFor(() => {
+          expect(mockRouter).toMatchObject({
+            asPath: "/?page=1",
+          });
+        });
+      });
+
+      it("requests the second page from the server", async () => {
+        render(<Home />);
+
+        fetchMock.once(JSON.stringify(mockCuratedPhotosSecondPageResponse));
+        const user = userEvent.setup();
+        user.click(screen.getByRole("button", { name: /previous/i }));
+
+        await waitFor(() =>
+          expect(fetchMock).toHaveBeenCalledWith("/api/photos?page=1")
+        );
       });
     });
 
@@ -108,7 +169,7 @@ describe("Home", () => {
         ...mockCuratedPhotosResponse,
         page,
       });
-      mockRouter.push("/?page=2");
+      mockRouter.setCurrentUrl("/?page=2");
       render(<Home />);
       expect(
         screen.getByRole("button", { name: /previous/i })
