@@ -30,6 +30,25 @@ describe("Home", () => {
     expect(screen.getByText(lastPhotographer)).toBeInTheDocument();
   });
 
+  it("displays an error message if the request fails", async () => {
+    const page = 1;
+    queryClient.setQueryData(
+      [USE_CURATED_PHOTOS_KEY, page],
+      mockCuratedPhotosResponse
+    );
+    render(<Home />);
+
+    fetchMock.mockRejectedValueOnce(
+      JSON.stringify({ message: "Internal Server Error" })
+    );
+    const user = userEvent.setup();
+    user.click(screen.getByRole("button", { name: /next/i }));
+
+    expect(
+      await screen.findByText(/oops! Something went wrong./i)
+    ).toBeInTheDocument();
+  });
+
   describe("pagination", () => {
     describe("clicking Next", () => {
       beforeEach(() => {

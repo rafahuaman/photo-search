@@ -23,9 +23,11 @@ function SearchResults() {
   const router = useRouter();
   const page = Number(router.query.page) || 1;
   const searchQuery = useSearchQueryUrlParam();
-  const { data } = usePhotoSearch(searchQuery, page);
+  const { data, isError } = usePhotoSearch(searchQuery, page);
   const showPrevious = page > 1;
   const showNext = data?.hasNext;
+
+  if (isError) return null;
 
   const handleNext = () => {
     router.push(
@@ -108,6 +110,7 @@ export default function Search() {
           name="description"
           content="Photo Search Exercise - Search Page"
         />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       {hasQuery ? <SearchResults /> : <EmptySearch />}
     </>

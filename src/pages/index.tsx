@@ -12,9 +12,11 @@ import { fetchCuratedPhotosServer } from "./api/photos";
 export default function Home() {
   const router = useRouter();
   const page = Number(router.query.page) || 1;
-  const { data } = useCuratedPhotos(page);
+  const { data, isError } = useCuratedPhotos(page);
   const showPrevious = page > 1;
   const showNext = data?.hasNext;
+
+  if (isError) return null;
 
   const handleNext = () => {
     router.push({ pathname: "/", query: { page: page + 1 } }, undefined, {
@@ -35,6 +37,7 @@ export default function Home() {
       <Head>
         <title>Photo Search | Home</title>
         <meta name="description" content="Photo Search Exercise" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <VStack spacing={10}>
         <VStack spacing={10}>

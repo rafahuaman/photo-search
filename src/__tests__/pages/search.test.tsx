@@ -37,6 +37,25 @@ describe("Search", () => {
     expect(screen.getByText(lastPhotographer)).toBeInTheDocument();
   });
 
+  it("displays an error message if the request fails", async () => {
+    const page = 1;
+    queryClient.setQueryData(
+      [USE_PHOTO_SEARCH_KEY, testQuery, page],
+      mockPhotoSearchResponse
+    );
+    render(<Search />);
+
+    fetchMock.mockRejectedValueOnce(
+      JSON.stringify({ message: "Internal Server Error" })
+    );
+    const user = userEvent.setup();
+    user.click(screen.getByRole("button", { name: /next/i }));
+
+    expect(
+      await screen.findByText(/oops! Something went wrong./i)
+    ).toBeInTheDocument();
+  });
+
   it("renders the search page empty state when no query is not provided", () => {
     mockRouter.setCurrentUrl("/search");
 
