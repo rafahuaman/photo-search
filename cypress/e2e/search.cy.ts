@@ -3,20 +3,24 @@ import {
   mockPexelsPhotosSecondPageResponse,
 } from "@/mockData/pexels";
 
-describe("Home", () => {
-  it("displays and paginates curated photos", () => {
+describe("Search", () => {
+  it("displays and paginates search results", () => {
     cy.interceptServer({
       hostname: "https://api.pexels.com",
       method: "GET",
-      path: "/v1//curated",
-      query: { page: 1, per_page: 10 },
+      path: "/v1//search",
+      query: { page: 1, per_page: 10, query: "cats" },
       statusCode: 200,
       body: mockPexelsPhotosResponse,
     });
 
-    cy.visit("/");
+    cy.visit("/search");
 
-    cy.findByText(mockPexelsPhotosResponse.photos[0].photographer).should(
+    cy.findByRole("heading", { name: /welcome!/i }).should("be.visible");
+
+    cy.findByPlaceholderText(/search/i).type("cats{enter}");
+
+    cy.findByAltText(mockPexelsPhotosResponse.photos[0].alt).should(
       "be.visible"
     );
     cy.findByAltText(mockPexelsPhotosResponse.photos[1].alt).should(
@@ -26,17 +30,18 @@ describe("Home", () => {
     cy.interceptServer({
       hostname: "https://api.pexels.com",
       method: "GET",
-      path: "/v1//curated",
-      query: { page: 2, per_page: 10 },
+      path: "/v1//search",
+      query: { page: 2, per_page: 10, query: "cats" },
       statusCode: 200,
       body: mockPexelsPhotosSecondPageResponse,
     });
+
     cy.findByRole("button", { name: /next/i }).should("be.visible").click();
 
     cy.findByText(
       mockPexelsPhotosSecondPageResponse.photos[0].photographer
     ).should("be.visible");
-    cy.findByText(mockPexelsPhotosResponse.photos[0].photographer).should(
+    cy.findByAltText(mockPexelsPhotosResponse.photos[0].alt).should(
       "not.exist"
     );
     cy.findByRole("button", { name: /next/i }).should("not.exist");
@@ -50,7 +55,6 @@ describe("Home", () => {
     cy.findByText(mockPexelsPhotosResponse.photos[0].photographer).should(
       "be.visible"
     );
-
     cy.findByText(
       mockPexelsPhotosSecondPageResponse.photos[0].photographer
     ).should("not.exist");
