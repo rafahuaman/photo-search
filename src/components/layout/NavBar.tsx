@@ -1,8 +1,8 @@
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import {
   Box,
-  Button,
   Flex,
+  IconButton,
   Stack,
   Text,
   useColorMode,
@@ -25,9 +25,11 @@ export default function NavBar() {
 
           <Flex alignItems={"center"}>
             <Stack direction={"row"} spacing={7}>
-              <Button onClick={toggleColorMode}>
-                {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
-              </Button>
+              <IconButton
+                aria-label="Toggle Dark Mode"
+                icon={colorMode === "light" ? <MoonIcon /> : <SunIcon />}
+                onClick={toggleColorMode}
+              />
             </Stack>
           </Flex>
         </Flex>
