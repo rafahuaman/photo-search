@@ -33,10 +33,8 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Photo Search</title>
+        <title>Photo Search | Home</title>
         <meta name="description" content="Photo Search Exercise" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
       <VStack spacing={10}>
         <VStack spacing={10}>

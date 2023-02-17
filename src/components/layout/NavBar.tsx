@@ -1,3 +1,4 @@
+import useSearchQueryUrlParam from "@/hooks/useSearchQueryUrlParam";
 import { MoonIcon, Search2Icon, SunIcon } from "@chakra-ui/icons";
 import {
   Box,
@@ -25,7 +26,7 @@ type SearchBar = {
 export default function NavBar() {
   const { colorMode, toggleColorMode } = useColorMode();
   const router = useRouter();
-  const searchQuery = router.query.query as string;
+  const searchQuery = useSearchQueryUrlParam();
 
   const {
     register,
@@ -69,6 +70,10 @@ export default function NavBar() {
                   placeholder="Search"
                   {...register("query", {
                     required: "A search term is required",
+                    validate: {
+                      required: (value) =>
+                        !!value.trim() || "A search term is required",
+                    },
                   })}
                 />
               </InputGroup>

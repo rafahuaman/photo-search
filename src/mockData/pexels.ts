@@ -1,4 +1,4 @@
-export const mockPexelsCuratedPhotosResponse = {
+export const mockPexelsPhotosResponse = {
   page: 1,
   per_page: 2,
   photos: [

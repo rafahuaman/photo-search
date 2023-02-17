@@ -3,7 +3,7 @@ import {
   mockCuratedPhotosResponse,
   mockCuratedPhotosSecondPageResponse,
 } from "@/mockData/curatedPhotos";
-import { mockPexelsCuratedPhotosResponse } from "@/mockData/pexels";
+import { mockPexelsPhotosResponse } from "@/mockData/pexels";
 import Home, { getServerSideProps } from "@/pages/index";
 import { queryClient, render, screen, userEvent, waitFor } from "@/test-utils";
 import { ServerResponse } from "http";
@@ -12,7 +12,7 @@ import mockRouter from "next-router-mock";
 import { ParsedUrlQuery } from "querystring";
 
 describe("Home", () => {
-  it("renders home", () => {
+  it("renders the home page", () => {
     const page = 1;
     queryClient.setQueryData(
       [USE_CURATED_PHOTOS_KEY, page],
@@ -132,7 +132,7 @@ describe("Home", () => {
         });
       });
 
-      it("requests the second page from the server", async () => {
+      it("requests the first page from the server", async () => {
         render(<Home />);
 
         fetchMock.once(JSON.stringify(mockCuratedPhotosSecondPageResponse));
@@ -200,7 +200,7 @@ describe("getServerSideProps", () => {
       query: { page: "2" } as ParsedUrlQuery,
       res: { setHeader: jest.fn() } as unknown as ServerResponse,
     };
-    fetchMock.once(JSON.stringify(mockPexelsCuratedPhotosResponse));
+    fetchMock.once(JSON.stringify(mockPexelsPhotosResponse));
 
     const response = await getServerSideProps(
       context as GetServerSidePropsContext
@@ -215,12 +215,12 @@ describe("getServerSideProps", () => {
                 data: expect.objectContaining({
                   photos: [
                     expect.objectContaining({
-                      id: mockPexelsCuratedPhotosResponse.photos[0].id,
-                      url: mockPexelsCuratedPhotosResponse.photos[0].src.large,
+                      id: mockPexelsPhotosResponse.photos[0].id,
+                      url: mockPexelsPhotosResponse.photos[0].src.large,
                     }),
                     expect.objectContaining({
-                      id: mockPexelsCuratedPhotosResponse.photos[1].id,
-                      url: mockPexelsCuratedPhotosResponse.photos[1].src.large,
+                      id: mockPexelsPhotosResponse.photos[1].id,
+                      url: mockPexelsPhotosResponse.photos[1].src.large,
                     }),
                   ],
                 }),
@@ -238,7 +238,7 @@ describe("getServerSideProps", () => {
       query: {} as ParsedUrlQuery,
       res: { setHeader: jest.fn() } as unknown as ServerResponse,
     };
-    fetchMock.once(JSON.stringify(mockPexelsCuratedPhotosResponse));
+    fetchMock.once(JSON.stringify(mockPexelsPhotosResponse));
 
     const response = await getServerSideProps(
       context as GetServerSidePropsContext

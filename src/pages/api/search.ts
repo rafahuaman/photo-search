@@ -1,3 +1,4 @@
+import { isBlank } from "@/utils/string";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { createClient, Photos as PexelsPhotos } from "pexels";
 
@@ -32,21 +33,27 @@ export default async function handler(
     "Cache-Control",
     "public, s-maxage=10, stale-while-revalidate=59"
   );
-  const { page } = req.query;
+  const { page, query } = req.query;
+  if (isBlank(query)) {
+    return res.status(400).send({ message: "Bad Request." });
+  }
+
   try {
-    const result = await fetchCuratedPhotosServer(Number(page));
+    const result = await fetchPhotoSearchServer(query as string, Number(page));
     res.status(200).json(result);
   } catch (error) {
     res.status(500).send({ message: "Internal Server Error." });
   }
 }
 
-export async function fetchCuratedPhotosServer(
+export async function fetchPhotoSearchServer(
+  query: string,
   page: number
 ): Promise<PhotosResponse> {
   const pexelsClient = createClient(PEXELS_API_KEY);
 
-  const curatedPhotos = (await pexelsClient.photos.curated({
+  const curatedPhotos = (await pexelsClient.photos.search({
+    query,
     page: page || PAGE_DEFAULT,
     per_page: PHOTOS_PER_PAGE_DEFAULT,
   })) as PexelsPhotos;

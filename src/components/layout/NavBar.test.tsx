@@ -38,6 +38,21 @@ describe("NavBar", () => {
       });
     });
 
+    it("does nothing when submitting the search form with white spaces", async () => {
+      const user = userEvent.setup();
+      render(<NavBar />);
+
+      user.type(screen.getByPlaceholderText(/search/i), "   {enter}");
+
+      const errorMessage = await screen.findByText(
+        /a search term is required/i
+      );
+      expect(errorMessage).toBeInTheDocument();
+      expect(mockRouter).toMatchObject({
+        asPath: "/",
+      });
+    });
+
     it("renders the search parameter when there is one", () => {
       mockRouter.setCurrentUrl("/search?query=test&page=2");
       render(<NavBar />);
