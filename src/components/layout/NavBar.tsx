@@ -26,6 +26,7 @@ export default function NavBar() {
           <Flex alignItems={"center"}>
             <Stack direction={"row"} spacing={7}>
               <IconButton
+                variant="ghost"
                 aria-label="Toggle Dark Mode"
                 icon={colorMode === "light" ? <MoonIcon /> : <SunIcon />}
                 onClick={toggleColorMode}
