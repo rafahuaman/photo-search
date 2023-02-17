@@ -3,11 +3,11 @@ import {
   Box,
   Flex,
   HStack,
-  Image,
   Link,
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
+import Image from "next/image";
 
 type PhotoCardProps = {
   id: number;
@@ -16,6 +16,8 @@ type PhotoCardProps = {
   photographerUrl: string;
   alt: string;
 };
+const PHOTO_CARD_IMAGE_WIDTH = 940;
+const PHOTO_CARD_IMAGE_HEIGHT = 650;
 
 function PhotoCard({
   id,
@@ -33,7 +35,12 @@ function PhotoCard({
       shadow="lg"
       data-testid={`photo-card-${id}`}
     >
-      <Image src={url} alt={alt} />
+      <Image
+        src={url}
+        alt={alt}
+        width={PHOTO_CARD_IMAGE_WIDTH}
+        height={PHOTO_CARD_IMAGE_HEIGHT}
+      />
 
       <Flex p="6" justifyContent="space-between" alignContent="center">
         <Link

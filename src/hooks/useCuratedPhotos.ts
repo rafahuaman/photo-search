@@ -17,5 +17,6 @@ export default function useCuratedPhotos(page: number) {
   return useQuery({
     queryKey: [USE_CURATED_PHOTOS_KEY, page],
     queryFn: () => fetchCuratedPhotos(page),
+    keepPreviousData: true,
   });
 }
