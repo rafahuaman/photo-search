@@ -2,7 +2,7 @@ import PhotoCard from "@/components/PhotoCard";
 import useCuratedPhotos, {
   USE_CURATED_PHOTOS_KEY,
 } from "@/hooks/useCuratedPhotos";
-import { Button, ButtonGroup, VStack } from "@chakra-ui/react";
+import { Button, ButtonGroup, Fade, VStack } from "@chakra-ui/react";
 import { dehydrate, QueryClient } from "@tanstack/react-query";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
@@ -42,14 +42,15 @@ export default function Home() {
         <VStack spacing={10}>
           {data?.photos.map(
             ({ id, url, photographerName, photographerUrl, alt }) => (
-              <PhotoCard
-                id={id}
-                key={id}
-                url={url}
-                photographerName={photographerName}
-                photographerUrl={photographerUrl}
-                alt={alt}
-              />
+              <Fade key={id} in>
+                <PhotoCard
+                  id={id}
+                  url={url}
+                  photographerName={photographerName}
+                  photographerUrl={photographerUrl}
+                  alt={alt}
+                />
+              </Fade>
             )
           )}
         </VStack>
