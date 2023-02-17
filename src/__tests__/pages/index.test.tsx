@@ -3,9 +3,13 @@ import {
   mockCuratedPhotosResponse,
   mockCuratedPhotosSecondPageResponse,
 } from "@/mockData/curatedPhotos";
-import Home from "@/pages/index";
+import { mockPexelsCuratedPhotosResponse } from "@/mockData/pexels";
+import Home, { getServerSideProps } from "@/pages/index";
 import { queryClient, render, screen, userEvent, waitFor } from "@/test-utils";
+import { ServerResponse } from "http";
+import { GetServerSidePropsContext } from "next";
 import mockRouter from "next-router-mock";
+import { ParsedUrlQuery } from "querystring";
 
 describe("Home", () => {
   it("renders home", () => {
@@ -186,6 +190,70 @@ describe("Home", () => {
       expect(
         screen.queryByRole("button", { name: /previous/i })
       ).not.toBeInTheDocument();
+    });
+  });
+});
+
+describe("getServerSideProps", () => {
+  it("return the dehydrated CURATED_PHOTOS query for the current page", async () => {
+    const context = {
+      query: { page: "2" } as ParsedUrlQuery,
+      res: { setHeader: jest.fn() } as unknown as ServerResponse,
+    };
+    fetchMock.once(JSON.stringify(mockPexelsCuratedPhotosResponse));
+
+    const response = await getServerSideProps(
+      context as GetServerSidePropsContext
+    );
+    expect(response).toEqual({
+      props: {
+        dehydratedState: {
+          queries: [
+            expect.objectContaining({
+              queryKey: ["CURATED_PHOTOS", 2],
+              state: expect.objectContaining({
+                data: expect.objectContaining({
+                  photos: [
+                    expect.objectContaining({
+                      id: mockPexelsCuratedPhotosResponse.photos[0].id,
+                      url: mockPexelsCuratedPhotosResponse.photos[0].src.large,
+                    }),
+                    expect.objectContaining({
+                      id: mockPexelsCuratedPhotosResponse.photos[1].id,
+                      url: mockPexelsCuratedPhotosResponse.photos[1].src.large,
+                    }),
+                  ],
+                }),
+              }),
+            }),
+          ],
+          mutations: [],
+        },
+      },
+    });
+  });
+
+  it("return the dehydrated CURATED_PHOTOS query first page when no param is specified", async () => {
+    const context = {
+      query: {} as ParsedUrlQuery,
+      res: { setHeader: jest.fn() } as unknown as ServerResponse,
+    };
+    fetchMock.once(JSON.stringify(mockPexelsCuratedPhotosResponse));
+
+    const response = await getServerSideProps(
+      context as GetServerSidePropsContext
+    );
+    expect(response).toEqual({
+      props: {
+        dehydratedState: {
+          queries: [
+            expect.objectContaining({
+              queryKey: ["CURATED_PHOTOS", 1],
+            }),
+          ],
+          mutations: [],
+        },
+      },
     });
   });
 });
