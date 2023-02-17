@@ -45,4 +45,19 @@ describe("NavBar", () => {
       expect(screen.getByPlaceholderText(/search/i)).toHaveValue("test");
     });
   });
+
+  describe("Color mode toggle", () => {
+    it("toggles the color mode", async () => {
+      const user = userEvent.setup();
+      render(<NavBar />);
+
+      expect(screen.getByTestId("moon-icon")).toBeVisible();
+      expect(screen.queryByTestId("sun-icon")).not.toBeInTheDocument();
+
+      user.click(screen.getByRole("button", { name: "Toggle Dark Mode" }));
+
+      expect(await screen.findByTestId("sun-icon")).toBeVisible();
+      expect(screen.queryByTestId("moon-icon")).not.toBeInTheDocument();
+    });
+  });
 });

@@ -83,7 +83,13 @@ export default function NavBar() {
               <IconButton
                 variant="ghost"
                 aria-label="Toggle Dark Mode"
-                icon={colorMode === "light" ? <MoonIcon /> : <SunIcon />}
+                icon={
+                  colorMode === "light" ? (
+                    <MoonIcon data-testid="moon-icon" />
+                  ) : (
+                    <SunIcon data-testid="sun-icon" />
+                  )
+                }
                 onClick={toggleColorMode}
               />
             </Stack>
