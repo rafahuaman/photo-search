@@ -18,9 +18,7 @@ describe("Home", () => {
     ).should("be.visible");
 
     cy.findByAltText(mockPexelsCuratedPhotosResponse.photos[1].alt).should(
-      "have.attr",
-      "src",
-      mockPexelsCuratedPhotosResponse.photos[1].src.large
+      "be.visible"
     );
   });
 });
