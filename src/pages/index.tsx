@@ -2,7 +2,7 @@ import PhotoCard from "@/components/PhotoCard";
 import useCuratedPhotos, {
   USE_CURATED_PHOTOS_KEY,
 } from "@/hooks/useCuratedPhotos";
-import { Button, VStack } from "@chakra-ui/react";
+import { Button, ButtonGroup, VStack } from "@chakra-ui/react";
 import { dehydrate, QueryClient } from "@tanstack/react-query";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
@@ -54,16 +54,10 @@ export default function Home() {
           )}
         </VStack>
 
-        {showPrevious && (
-          <Button colorScheme="teal" variant="outline" onClick={handlePrevious}>
-            Previous
-          </Button>
-        )}
-        {showNext && (
-          <Button colorScheme="teal" variant="outline" onClick={handleNext}>
-            Next
-          </Button>
-        )}
+        <ButtonGroup variant="outline" colorScheme="teal" spacing="6">
+          {showPrevious && <Button onClick={handlePrevious}>Previous</Button>}
+          {showNext && <Button onClick={handleNext}>Next</Button>}
+        </ButtonGroup>
       </VStack>
     </>
   );
