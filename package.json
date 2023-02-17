@@ -52,6 +52,7 @@
     "lint-staged": "^13.1.2",
     "mock-match-media": "^0.4.2",
     "next": "13.1.6",
+    "next-router-mock": "^0.9.1",
     "nock": "^13.3.0",
     "node-mocks-http": "^1.12.1",
     "pexels": "^1.4.0",

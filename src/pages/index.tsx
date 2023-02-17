@@ -2,14 +2,27 @@ import PhotoCard from "@/components/PhotoCard";
 import useCuratedPhotos, {
   USE_CURATED_PHOTOS_KEY,
 } from "@/hooks/useCuratedPhotos";
-import { VStack } from "@chakra-ui/react";
+import { Button, VStack } from "@chakra-ui/react";
 import { dehydrate, QueryClient } from "@tanstack/react-query";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import { fetchCuratedPhotosServer } from "./api/photos";
 
 export default function Home() {
-  const { data } = useCuratedPhotos(1);
+  const router = useRouter();
+  const page = Number(router.query.page) || 1;
+  const { data } = useCuratedPhotos(page);
+  const showPrevious = page > 1;
+  const showNext = data?.hasNext;
+
+  const handleNext = () => {
+    router.push({ pathname: "/", query: { page: page + 1 } }, undefined, {
+      shallow: true,
+      scroll: true,
+    });
+  };
+
   return (
     <>
       <Head>
@@ -19,16 +32,30 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <VStack spacing={10}>
-        {data?.photos.map(
-          ({ id, url, photographerName, photographerUrl, alt }) => (
-            <PhotoCard
-              key={id}
-              url={url}
-              photographerName={photographerName}
-              photographerUrl={photographerUrl}
-              alt={alt}
-            />
-          )
+        <VStack spacing={10}>
+          {data?.photos.map(
+            ({ id, url, photographerName, photographerUrl, alt }) => (
+              <PhotoCard
+                id={id}
+                key={id}
+                url={url}
+                photographerName={photographerName}
+                photographerUrl={photographerUrl}
+                alt={alt}
+              />
+            )
+          )}
+        </VStack>
+
+        {showPrevious && (
+          <Button colorScheme="teal" variant="outline">
+            Previous
+          </Button>
+        )}
+        {showNext && (
+          <Button colorScheme="teal" variant="outline" onClick={handleNext}>
+            Next
+          </Button>
         )}
       </VStack>
     </>

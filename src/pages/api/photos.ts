@@ -18,6 +18,7 @@ type Photo = {
 export type PhotosResponse = {
   page: number;
   perPage: number;
+  hasNext: boolean;
   photos: Photo[];
 };
 // const PHOTOS_PER_PAGE_DEFAULT = 10;
@@ -53,6 +54,7 @@ export async function fetchCuratedPhotosServer(
   const result = {
     page: curatedPhotos.page,
     perPage: curatedPhotos.per_page,
+    hasNext: !!curatedPhotos.next_page,
     photos: curatedPhotos.photos.map((photo) => ({
       id: photo.id,
       alt: photo.alt || "",

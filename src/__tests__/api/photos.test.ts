@@ -61,6 +61,38 @@ describe("/api/photos", () => {
       );
     });
 
+    it("returns hasNext: true if next_page attribute exists", async () => {
+      const { req, res } = createMocks({
+        method: "GET",
+      });
+      fetchMock.once(
+        JSON.stringify({
+          ...mockPexelsCuratedPhotosResponse,
+          next_page: "https://api.pexels.com/v1/curated/?page=1&per_page=2",
+        })
+      );
+
+      await photosHandler(req, res);
+
+      expect(JSON.parse(res._getData()).hasNext).toEqual(true);
+    });
+
+    it("returns hasNext: false if next_page attribute does not exist", async () => {
+      const { req, res } = createMocks({
+        method: "GET",
+      });
+      fetchMock.once(
+        JSON.stringify({
+          ...mockPexelsCuratedPhotosResponse,
+          next_page: undefined,
+        })
+      );
+
+      await photosHandler(req, res);
+
+      expect(JSON.parse(res._getData()).hasNext).toEqual(false);
+    });
+
     it("returns a 500 when the call to Pexels API fails", async () => {
       const { req, res } = createMocks({
         method: "GET",

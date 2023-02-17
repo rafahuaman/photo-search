@@ -10,6 +10,7 @@ import {
 } from "@chakra-ui/react";
 
 type PhotoCardProps = {
+  id: number;
   url: string;
   photographerName: string;
   photographerUrl: string;
@@ -17,6 +18,7 @@ type PhotoCardProps = {
 };
 
 function PhotoCard({
+  id,
   url,
   photographerName,
   photographerUrl,
@@ -29,6 +31,7 @@ function PhotoCard({
       maxW="sm"
       borderWidth="1px"
       shadow="lg"
+      data-testid={`photo-card-${id}`}
     >
       <Image src={url} alt={alt} />
 
