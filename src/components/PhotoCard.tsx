@@ -15,6 +15,7 @@ type PhotoCardProps = {
   photographerName: string;
   photographerUrl: string;
   alt: string;
+  priority: boolean;
 };
 const PHOTO_CARD_IMAGE_WIDTH = 940;
 const PHOTO_CARD_IMAGE_HEIGHT = 650;
@@ -25,6 +26,7 @@ function PhotoCard({
   photographerName,
   photographerUrl,
   alt,
+  priority,
 }: PhotoCardProps) {
   return (
     <Box
@@ -40,6 +42,7 @@ function PhotoCard({
         alt={alt}
         width={PHOTO_CARD_IMAGE_WIDTH}
         height={PHOTO_CARD_IMAGE_HEIGHT}
+        priority={priority}
       />
 
       <Flex p="6" justifyContent="space-between" alignContent="center">
