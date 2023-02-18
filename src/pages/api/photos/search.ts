@@ -1,27 +1,9 @@
+import { ErrorResponse, PhotosResponse } from "@/types";
 import { isBlank } from "@/utils/string";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { createClient, Photos as PexelsPhotos } from "pexels";
 
 const PEXELS_API_KEY = process.env.PEXELS_API_KEY as string;
-
-type ErrorResponse = {
-  message: string;
-};
-
-type Photo = {
-  id: number;
-  alt: string;
-  url: string;
-  photographerName: string;
-  photographerUrl: string;
-};
-
-export type PhotosResponse = {
-  page: number;
-  perPage: number;
-  hasNext: boolean;
-  photos: Photo[];
-};
 const PHOTOS_PER_PAGE_DEFAULT = 10;
 const PAGE_DEFAULT = 1;
 

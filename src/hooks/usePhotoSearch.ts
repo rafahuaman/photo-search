@@ -1,4 +1,4 @@
-import { PhotosResponse } from "@/pages/api/photos";
+import { PhotosResponse } from "@/types";
 import { useToast } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 
