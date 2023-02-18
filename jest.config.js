@@ -21,7 +21,11 @@ const customJestConfig = {
   moduleNameMapper: {
     "@/(.*)$": "<rootDir>/src/$1",
   },
-  setupFilesAfterEnv: ["<rootDir>/jest-setup.ts"],
+  setupFiles: ["<rootDir>/jest-setupBeforeEnv.ts"],
+  setupFilesAfterEnv: [
+    "react-intersection-observer/test-utils",
+    "<rootDir>/jest-setup.ts",
+  ],
   testEnvironment: "jest-environment-jsdom",
 
   collectCoverage: true,
