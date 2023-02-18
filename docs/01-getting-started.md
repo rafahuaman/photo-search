@@ -27,5 +27,5 @@
 
 ## CI & CD
 
-- The Continuous Integration pipeline runs on every Pull Request.
-- Merging to `main` triggers our CI pipeline and deploys the application with [Vercel](https://vercel.com/).
+- The [Continuous Integration pipeline](/.github/workflows/CI.yml) runs on every Pull Request.
+- Merging to `main` triggers our CI pipeline and [deploys the application](/.github/workflows/Deployment.yml) with [Vercel](https://vercel.com/).
