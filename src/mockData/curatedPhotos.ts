@@ -153,3 +153,10 @@ export const mockCuratedPhotosSecondPageResponse = {
     },
   ],
 };
+
+export const mockCuratedPhotosEmptyResponse = {
+  page: 1,
+  perPage: 0,
+  hasNext: true,
+  photos: [],
+};

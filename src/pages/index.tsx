@@ -1,9 +1,10 @@
 import PhotoCard from "@/components/PhotoCard";
 import useCuratedPhotos, {
+  prefetchCuratedPhotos,
   USE_CURATED_PHOTOS_KEY,
 } from "@/hooks/useCuratedPhotos";
 import { Button, ButtonGroup, Fade, VStack } from "@chakra-ui/react";
-import { dehydrate, QueryClient } from "@tanstack/react-query";
+import { dehydrate, QueryClient, useQueryClient } from "@tanstack/react-query";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -13,6 +14,9 @@ export default function Home() {
   const router = useRouter();
   const page = Number(router.query.page) || 1;
   const { data, isError } = useCuratedPhotos(page);
+  const queryClient = useQueryClient();
+  prefetchCuratedPhotos(queryClient, page + 1);
+
   const showPrevious = page > 1;
   const showNext = data?.hasNext;
 

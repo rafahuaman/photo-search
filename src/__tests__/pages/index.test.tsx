@@ -1,5 +1,6 @@
 import { USE_CURATED_PHOTOS_KEY } from "@/hooks/useCuratedPhotos";
 import {
+  mockCuratedPhotosEmptyResponse,
   mockCuratedPhotosResponse,
   mockCuratedPhotosSecondPageResponse,
 } from "@/mockData/curatedPhotos";
@@ -13,12 +14,19 @@ import mockRouter from "next-router-mock";
 import { ParsedUrlQuery } from "querystring";
 
 describe("Home", () => {
-  it("renders the home page", () => {
+  beforeEach(() => {
+    // Simulates how we set the prime the cache via hydration when the page is server-side rendered
     const page = 1;
     queryClient.setQueryData(
       [USE_CURATED_PHOTOS_KEY, page],
       mockCuratedPhotosResponse
     );
+
+    // Mocks the prefetching of the next page
+    fetchMock.once(JSON.stringify(mockCuratedPhotosSecondPageResponse));
+  });
+
+  it("renders the home page", () => {
     render(<Home />);
     const firstPhotographer =
       mockCuratedPhotosResponse.photos[0].photographerName;
@@ -31,11 +39,18 @@ describe("Home", () => {
     expect(screen.getByText(lastPhotographer)).toBeInTheDocument();
   });
 
+  it("prefetches the second page from the server", async () => {
+    render(<Home />);
+
+    await waitFor(() =>
+      expect(fetchMock).toHaveBeenCalledWith("/api/photos?page=2")
+    );
+  });
+
   it("renders without axe violations", async () => {
-    const page = 1;
     queryClient.setQueryData(
-      [USE_CURATED_PHOTOS_KEY, page],
-      mockCuratedPhotosResponse
+      [USE_CURATED_PHOTOS_KEY, 2],
+      mockCuratedPhotosEmptyResponse
     );
     const { container } = render(<Home />);
 
@@ -45,14 +60,18 @@ describe("Home", () => {
   });
 
   it("displays an error message if the request fails", async () => {
+    queryClient.clear();
+    fetchMock.resetMocks();
     const page = 1;
     queryClient.setQueryData(
       [USE_CURATED_PHOTOS_KEY, page],
       mockCuratedPhotosResponse
     );
+    // Fails prefetching and all subsequent fetches
+    fetchMock.mockReject(new Error("Internal server error."));
+
     render(<Home />);
 
-    fetchMock.mockRejectOnce(new Error("Internal server error."));
     const user = userEvent.setup();
     user.click(screen.getByRole("button", { name: /next/i }));
 
@@ -61,7 +80,9 @@ describe("Home", () => {
     );
   });
 
-  it("displays the request returns something other than 200", async () => {
+  it("displays an error if the request returns something other than 200", async () => {
+    queryClient.clear();
+    fetchMock.resetMocks();
     const page = 1;
     queryClient.setQueryData(
       [USE_CURATED_PHOTOS_KEY, page],
@@ -91,7 +112,8 @@ describe("Home", () => {
       it("retrieves the next page when the user clicks Next", async () => {
         render(<Home />);
 
-        fetchMock.once(JSON.stringify(mockCuratedPhotosSecondPageResponse));
+        // Mock prefetching of third page
+        fetchMock.once(JSON.stringify(mockCuratedPhotosEmptyResponse));
         const user = userEvent.setup();
         user.click(screen.getByRole("button", { name: /next/i }));
 
@@ -110,7 +132,8 @@ describe("Home", () => {
       it("increases the page param by 1", async () => {
         render(<Home />);
 
-        fetchMock.once(JSON.stringify(mockCuratedPhotosSecondPageResponse));
+        // Mock prefetching of third page
+        fetchMock.once(JSON.stringify(mockCuratedPhotosEmptyResponse));
         const user = userEvent.setup();
         user.click(screen.getByRole("button", { name: /next/i }));
 
@@ -121,21 +144,24 @@ describe("Home", () => {
         });
       });
 
-      it("requests the second page from the server", async () => {
+      it("prefetches the third page from the server", async () => {
         render(<Home />);
 
-        fetchMock.once(JSON.stringify(mockCuratedPhotosSecondPageResponse));
+        // Mock prefetching of third page
+        fetchMock.once(JSON.stringify(mockCuratedPhotosEmptyResponse));
         const user = userEvent.setup();
         user.click(screen.getByRole("button", { name: /next/i }));
 
         await waitFor(() =>
-          expect(fetchMock).toHaveBeenCalledWith("/api/photos?page=2")
+          expect(fetchMock).toHaveBeenCalledWith("/api/photos?page=3")
         );
       });
     });
 
     describe("clicking Previous", () => {
       beforeEach(() => {
+        queryClient.clear();
+        fetchMock.resetMocks();
         const page = 2;
         queryClient.setQueryData([USE_CURATED_PHOTOS_KEY, page], {
           ...mockCuratedPhotosSecondPageResponse,
@@ -169,7 +195,7 @@ describe("Home", () => {
       it("decreases the page param by 1", async () => {
         render(<Home />);
 
-        fetchMock.once(JSON.stringify(mockCuratedPhotosSecondPageResponse));
+        fetchMock.once(JSON.stringify(mockCuratedPhotosResponse));
         const user = userEvent.setup();
         user.click(screen.getByRole("button", { name: /previous/i }));
 
@@ -183,7 +209,7 @@ describe("Home", () => {
       it("requests the first page from the server", async () => {
         render(<Home />);
 
-        fetchMock.once(JSON.stringify(mockCuratedPhotosSecondPageResponse));
+        fetchMock.once(JSON.stringify(mockCuratedPhotosResponse));
         const user = userEvent.setup();
         user.click(screen.getByRole("button", { name: /previous/i }));
 

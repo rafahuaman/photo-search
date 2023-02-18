@@ -99,3 +99,9 @@ export const mockPexelsPhotosSecondPageResponse = {
     },
   ],
 };
+
+export const mockPexelsEmptyPageResponse = {
+  page: 1,
+  per_page: 0,
+  photos: [],
+};

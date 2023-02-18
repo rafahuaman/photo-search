@@ -1,5 +1,6 @@
 # Improvements
 
+- Implement prefetching on search page.
 - Reduce some duplication by extracting the pagination components and Pexels API response transformation logic.
   - I considered attempting this refactor but I didn't want to create a premature abstraction. Additionally, search and curation are separate concerns and have the potential to evolve in different directions. So I followed the [Three strikes rule](https://wiki.c2.com/?ThreeStrikesAndYouRefactor) and decided to wait.
 - Custom 404 and 500 error pages

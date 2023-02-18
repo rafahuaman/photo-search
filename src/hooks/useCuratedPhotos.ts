@@ -1,6 +1,6 @@
 import { PhotosResponse } from "@/types";
 import { useToast } from "@chakra-ui/react";
-import { useQuery } from "@tanstack/react-query";
+import { QueryClient, useQuery } from "@tanstack/react-query";
 
 async function fetchCuratedPhotos(page: number): Promise<PhotosResponse> {
   const params = new URLSearchParams({
@@ -16,6 +16,16 @@ async function fetchCuratedPhotos(page: number): Promise<PhotosResponse> {
 }
 
 export const USE_CURATED_PHOTOS_KEY = "CURATED_PHOTOS";
+
+export const prefetchCuratedPhotos = async (
+  queryClient: QueryClient,
+  page: number
+) => {
+  await queryClient.prefetchQuery({
+    queryKey: [USE_CURATED_PHOTOS_KEY, page],
+    queryFn: () => fetchCuratedPhotos(page),
+  });
+};
 
 export default function useCuratedPhotos(page: number) {
   const toast = useToast();
