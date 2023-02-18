@@ -4,9 +4,9 @@ Hello! 👋🏽 I'm Rafael Huaman.
 
 This is my submission of the Photo Search exercise.
 
-I approached this exercise as I would a real project so I ensured the application was well-tested and included build and deployment pipelines.
+I approached this exercise as an actual project, ensuring the application was well-tested and included build and deployment pipelines.
 
-The links below include the project documentation along with Testing Guidelines, an example of the type of guides I like include in my projects to help the team.
+The links below include the project documentation and Testing Guidelines, an example of the guides I like to have in my projects to help the team.
 
 I also added an Improvements section to capture things I didn't do but identified as potential improvements.
 
