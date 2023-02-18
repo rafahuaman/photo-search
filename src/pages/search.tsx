@@ -17,7 +17,7 @@ import { dehydrate, QueryClient } from "@tanstack/react-query";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { fetchPhotoSearchServer } from "./api/search";
+import { fetchPhotoSearchServer } from "./api/photos/search";
 
 function SearchResults() {
   const router = useRouter();

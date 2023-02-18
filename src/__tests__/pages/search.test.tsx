@@ -51,9 +51,9 @@ describe("Search", () => {
     const user = userEvent.setup();
     user.click(screen.getByRole("button", { name: /next/i }));
 
-    expect(
-      await screen.findByText(/oops! Something went wrong./i)
-    ).toBeInTheDocument();
+    await waitFor(() =>
+      expect(screen.getByText(/oops! Something went wrong./i)).toBeVisible()
+    );
   });
 
   it("renders the search page empty state when no query is not provided", () => {
@@ -167,7 +167,7 @@ describe("Search", () => {
 
         await waitFor(() =>
           expect(fetchMock).toHaveBeenCalledWith(
-            "/api/search?query=test+query&page=2"
+            "/api/photos/search?query=test+query&page=2"
           )
         );
       });
@@ -228,7 +228,7 @@ describe("Search", () => {
 
         await waitFor(() =>
           expect(fetchMock).toHaveBeenCalledWith(
-            `/api/search?query=test+query&page=1`
+            `/api/photos/search?query=test+query&page=1`
           )
         );
       });

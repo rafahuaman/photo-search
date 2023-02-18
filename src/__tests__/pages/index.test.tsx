@@ -44,9 +44,9 @@ describe("Home", () => {
     const user = userEvent.setup();
     user.click(screen.getByRole("button", { name: /next/i }));
 
-    expect(
-      await screen.findByText(/oops! Something went wrong./i)
-    ).toBeInTheDocument();
+    await waitFor(() =>
+      expect(screen.getByText(/oops! Something went wrong./i)).toBeVisible()
+    );
   });
 
   describe("pagination", () => {

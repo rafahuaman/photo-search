@@ -14,6 +14,13 @@ export const queryClient = new QueryClient({
       retry: false,
     },
   },
+  logger: {
+    log: console.log,
+    warn: console.warn,
+    // no more errors on the console for tests
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    error: process.env.NODE_ENV === "test" ? jest.fn() : console.error,
+  },
 });
 
 const AllTheProviders = ({ children }: { children: React.ReactNode }) => {

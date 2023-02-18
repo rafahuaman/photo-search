@@ -10,7 +10,7 @@ async function fetchPhotoSearch(
     query,
     page: page.toString(),
   });
-  const response = await fetch("/api/search?" + params);
+  const response = await fetch("/api/photos/search?" + params);
   if (!response.ok) {
     throw new Error("Network response was not ok");
   }

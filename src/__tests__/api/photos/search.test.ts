@@ -1,8 +1,8 @@
 import { mockPexelsPhotosResponse } from "@/mockData/pexels";
-import { default as photoSearchHandler } from "@/pages/api/search";
+import { default as photoSearchHandler } from "@/pages/api/photos/search";
 import { createMocks } from "node-mocks-http";
 
-describe("/api/search", () => {
+describe("/api/photos/search", () => {
   describe("/search", () => {
     it("returns relevant photos", async () => {
       const { req, res } = createMocks({
