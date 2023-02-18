@@ -1,6 +1,6 @@
 import { PhotosResponse } from "@/types";
 import { useToast } from "@chakra-ui/react";
-import { useQuery } from "@tanstack/react-query";
+import { QueryClient, useQuery } from "@tanstack/react-query";
 
 async function fetchPhotoSearch(
   query: string,
@@ -22,6 +22,17 @@ async function fetchPhotoSearch(
 }
 
 export const USE_PHOTO_SEARCH_KEY = "PHOTO_SEARCH";
+
+export const prefetchPhotoSearch = async (
+  queryClient: QueryClient,
+  query: string,
+  page: number
+) => {
+  await queryClient.prefetchQuery({
+    queryKey: [USE_PHOTO_SEARCH_KEY, query, page],
+    queryFn: () => fetchPhotoSearch(query, page),
+  });
+};
 
 export default function usePhotoSearch(query: string, page: number) {
   const toast = useToast();

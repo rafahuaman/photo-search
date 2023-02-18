@@ -15,7 +15,7 @@ describe("Home", () => {
       body: mockPexelsPhotosResponse,
     });
 
-    // Prefetching second page
+    // Prefetching the second page
     cy.interceptServer({
       hostname: "https://api.pexels.com",
       method: "GET",
@@ -34,11 +34,12 @@ describe("Home", () => {
       "be.visible"
     );
 
+    // Prefetching third page
     cy.interceptServer({
       hostname: "https://api.pexels.com",
       method: "GET",
       path: "/v1//curated",
-      query: { page: 2, per_page: 10 },
+      query: { page: 3, per_page: 10 },
       statusCode: 200,
       body: mockPexelsEmptyPageResponse,
     });

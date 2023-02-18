@@ -1,6 +1,9 @@
 import Container from "@/components/layout/Container";
 import PhotoCard from "@/components/PhotoCard";
-import usePhotoSearch, { USE_PHOTO_SEARCH_KEY } from "@/hooks/usePhotoSearch";
+import usePhotoSearch, {
+  prefetchPhotoSearch,
+  USE_PHOTO_SEARCH_KEY,
+} from "@/hooks/usePhotoSearch";
 import useSearchQueryUrlParam from "@/hooks/useSearchQueryUrlParam";
 import { isBlank } from "@/utils/string";
 import {
@@ -13,7 +16,7 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { dehydrate, QueryClient } from "@tanstack/react-query";
+import { dehydrate, QueryClient, useQueryClient } from "@tanstack/react-query";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -26,8 +29,11 @@ function SearchResults() {
   const { data, isError } = usePhotoSearch(searchQuery, page);
   const showPrevious = page > 1;
   const showNext = data?.hasNext;
+  const queryClient = useQueryClient();
 
   if (isError) return null;
+
+  prefetchPhotoSearch(queryClient, searchQuery, page + 1);
 
   const handleNext = () => {
     router.push(

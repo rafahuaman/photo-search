@@ -15,12 +15,11 @@ export default function Home() {
   const page = Number(router.query.page) || 1;
   const { data, isError } = useCuratedPhotos(page);
   const queryClient = useQueryClient();
-  prefetchCuratedPhotos(queryClient, page + 1);
-
   const showPrevious = page > 1;
   const showNext = data?.hasNext;
 
   if (isError) return null;
+  prefetchCuratedPhotos(queryClient, page + 1);
 
   const handleNext = () => {
     router.push({ pathname: "/", query: { page: page + 1 } }, undefined, {

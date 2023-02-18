@@ -1,6 +1,7 @@
 import { USE_PHOTO_SEARCH_KEY } from "@/hooks/usePhotoSearch";
 import { mockPexelsPhotosResponse } from "@/mockData/pexels";
 import {
+  mockPhotoSearchEmptyResponse,
   mockPhotoSearchResponse,
   mockPhotoSearchSecondPageResponse,
 } from "@/mockData/photoSearch";
@@ -18,15 +19,19 @@ const pathWithTestQuery = `/search?query=${testQuery}`;
 describe("Search", () => {
   beforeEach(() => {
     mockRouter.setCurrentUrl(pathWithTestQuery);
-  });
 
-  it("renders the search page with results", () => {
+    // Simulates how we set the prime the cache via hydration when the page is server-side rendered
     const page = 1;
     queryClient.setQueryData(
       [USE_PHOTO_SEARCH_KEY, testQuery, page],
       mockPhotoSearchResponse
     );
 
+    // Mocks the prefetching of the next page
+    fetchMock.once(JSON.stringify(mockPhotoSearchSecondPageResponse));
+  });
+
+  it("renders the search page with results", () => {
     render(<Search />);
     const firstPhotographer =
       mockPhotoSearchResponse.photos[0].photographerName;
@@ -38,11 +43,20 @@ describe("Search", () => {
     expect(screen.getByText(lastPhotographer)).toBeInTheDocument();
   });
 
+  it("prefetches the second page from the server", async () => {
+    render(<Search />);
+
+    await waitFor(() =>
+      expect(fetchMock).toHaveBeenCalledWith(
+        "/api/photos/search?query=test+query&page=2"
+      )
+    );
+  });
+
   it("renders without axe violations", async () => {
-    const page = 1;
     queryClient.setQueryData(
-      [USE_PHOTO_SEARCH_KEY, testQuery, page],
-      mockPhotoSearchResponse
+      [USE_PHOTO_SEARCH_KEY, testQuery, 2],
+      mockPhotoSearchSecondPageResponse
     );
     const { container } = render(<Search />);
 
@@ -52,14 +66,19 @@ describe("Search", () => {
   });
 
   it("displays an error message if the request fails", async () => {
+    queryClient.clear();
+    fetchMock.resetMocks();
     const page = 1;
     queryClient.setQueryData(
       [USE_PHOTO_SEARCH_KEY, testQuery, page],
       mockPhotoSearchResponse
     );
+
+    // Fails prefetching and normal fetches
+    fetchMock.mockReject(new Error("Internal server error."));
+
     render(<Search />);
 
-    fetchMock.mockRejectOnce(new Error("Internal server error."));
     const user = userEvent.setup();
     user.click(screen.getByRole("button", { name: /next/i }));
 
@@ -69,14 +88,19 @@ describe("Search", () => {
   });
 
   it("displays an error message if the request returns something other than 200", async () => {
+    queryClient.clear();
+    fetchMock.resetMocks();
     const page = 1;
     queryClient.setQueryData(
       [USE_PHOTO_SEARCH_KEY, testQuery, page],
       mockPhotoSearchResponse
     );
+
+    // Mocks prefetching and normal fetches
+    fetchMock.mockResponse("", { status: 429 });
+
     render(<Search />);
 
-    fetchMock.once("", { status: 429 });
     const user = userEvent.setup();
     user.click(screen.getByRole("button", { name: /next/i }));
 
@@ -157,7 +181,8 @@ describe("Search", () => {
       it("retrieves the next page when the user clicks Next", async () => {
         render(<Search />);
 
-        fetchMock.once(JSON.stringify(mockPhotoSearchSecondPageResponse));
+        // Mock prefetching of third page
+        fetchMock.once(JSON.stringify(mockPhotoSearchEmptyResponse));
         const user = userEvent.setup();
         user.click(screen.getByRole("button", { name: /next/i }));
 
@@ -176,7 +201,8 @@ describe("Search", () => {
       it("increases the page param by 1", async () => {
         render(<Search />);
 
-        fetchMock.once(JSON.stringify(mockPhotoSearchSecondPageResponse));
+        // Mock prefetching of third page
+        fetchMock.once(JSON.stringify(mockPhotoSearchEmptyResponse));
         const user = userEvent.setup();
         user.click(screen.getByRole("button", { name: /next/i }));
 
@@ -187,16 +213,17 @@ describe("Search", () => {
         });
       });
 
-      it("requests the second page from the server", async () => {
+      it("prefetches the third page from the server", async () => {
         render(<Search />);
 
-        fetchMock.once(JSON.stringify(mockPhotoSearchSecondPageResponse));
+        // Mock prefetching of third page
+        fetchMock.once(JSON.stringify(mockPhotoSearchEmptyResponse));
         const user = userEvent.setup();
         user.click(screen.getByRole("button", { name: /next/i }));
 
         await waitFor(() =>
           expect(fetchMock).toHaveBeenCalledWith(
-            "/api/photos/search?query=test+query&page=2"
+            "/api/photos/search?query=test+query&page=3"
           )
         );
       });
@@ -204,18 +231,25 @@ describe("Search", () => {
 
     describe("clicking Previous", () => {
       beforeEach(() => {
+        queryClient.clear();
+        fetchMock.resetMocks();
         const page = 2;
         queryClient.setQueryData([USE_PHOTO_SEARCH_KEY, testQuery, page], {
           ...mockPhotoSearchSecondPageResponse,
           hasNext: true,
         });
         mockRouter.setCurrentUrl(`${pathWithTestQuery}&page=${2}`);
+
+        // Mocks prefetch of the third page
+        fetchMock.once(JSON.stringify(mockPhotoSearchEmptyResponse));
+
+        // Mocks fetch of the first page
+        fetchMock.once(JSON.stringify(mockPhotoSearchResponse));
       });
 
       it("displays the previous page when the user clicks Previous", async () => {
         render(<Search />);
 
-        fetchMock.once(JSON.stringify(mockPhotoSearchResponse));
         const user = userEvent.setup();
         user.click(screen.getByRole("button", { name: /previous/i }));
 
@@ -237,7 +271,6 @@ describe("Search", () => {
       it("decreases the page param by 1", async () => {
         render(<Search />);
 
-        fetchMock.once(JSON.stringify(mockPhotoSearchSecondPageResponse));
         const user = userEvent.setup();
         user.click(screen.getByRole("button", { name: /previous/i }));
 
@@ -251,7 +284,6 @@ describe("Search", () => {
       it("requests the first page from the server", async () => {
         render(<Search />);
 
-        fetchMock.once(JSON.stringify(mockPhotoSearchSecondPageResponse));
         const user = userEvent.setup();
         user.click(screen.getByRole("button", { name: /previous/i }));
 

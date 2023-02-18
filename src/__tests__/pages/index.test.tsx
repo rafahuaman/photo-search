@@ -88,9 +88,12 @@ describe("Home", () => {
       [USE_CURATED_PHOTOS_KEY, page],
       mockCuratedPhotosResponse
     );
+
+    // Mocks prefetching and normal fetches
+    fetchMock.mockResponse("", { status: 429 });
+
     render(<Home />);
 
-    fetchMock.once("", { status: 429 });
     const user = userEvent.setup();
     user.click(screen.getByRole("button", { name: /next/i }));
 
@@ -168,12 +171,16 @@ describe("Home", () => {
           hasNext: true,
         });
         mockRouter.setCurrentUrl("/?page=2");
+        // Mocks prefetch of the third page
+        fetchMock.once(JSON.stringify(mockCuratedPhotosEmptyResponse));
+
+        // Mocks fetch of the first page
+        fetchMock.once(JSON.stringify(mockCuratedPhotosResponse));
       });
 
       it("displays the previous page when the user clicks Previous", async () => {
         render(<Home />);
 
-        fetchMock.once(JSON.stringify(mockCuratedPhotosResponse));
         const user = userEvent.setup();
         user.click(screen.getByRole("button", { name: /previous/i }));
 
@@ -195,7 +202,6 @@ describe("Home", () => {
       it("decreases the page param by 1", async () => {
         render(<Home />);
 
-        fetchMock.once(JSON.stringify(mockCuratedPhotosResponse));
         const user = userEvent.setup();
         user.click(screen.getByRole("button", { name: /previous/i }));
 
@@ -209,7 +215,6 @@ describe("Home", () => {
       it("requests the first page from the server", async () => {
         render(<Home />);
 
-        fetchMock.once(JSON.stringify(mockCuratedPhotosResponse));
         const user = userEvent.setup();
         user.click(screen.getByRole("button", { name: /previous/i }));
 

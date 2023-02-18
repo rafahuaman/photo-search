@@ -153,3 +153,10 @@ export const mockPhotoSearchSecondPageResponse = {
     },
   ],
 };
+
+export const mockPhotoSearchEmptyResponse = {
+  page: 1,
+  perPage: 0,
+  hasNext: true,
+  photos: [],
+};

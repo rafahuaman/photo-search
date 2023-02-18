@@ -1,4 +1,5 @@
 import {
+  mockPexelsEmptyPageResponse,
   mockPexelsPhotosResponse,
   mockPexelsPhotosSecondPageResponse,
 } from "@/mockData/pexels";
@@ -14,6 +15,16 @@ describe("Search", () => {
       body: mockPexelsPhotosResponse,
     });
 
+    // Prefetching the second page
+    cy.interceptServer({
+      hostname: "https://api.pexels.com",
+      method: "GET",
+      path: "/v1//search",
+      query: { page: 2, per_page: 10, query: "cats" },
+      statusCode: 200,
+      body: mockPexelsPhotosSecondPageResponse,
+    });
+
     cy.visit("/search");
 
     cy.findByRole("heading", { name: /welcome!/i }).should("be.visible");
@@ -27,13 +38,14 @@ describe("Search", () => {
       "be.visible"
     );
 
+    // Prefetching the third page
     cy.interceptServer({
       hostname: "https://api.pexels.com",
       method: "GET",
       path: "/v1//search",
-      query: { page: 2, per_page: 10, query: "cats" },
+      query: { page: 3, per_page: 10, query: "cats" },
       statusCode: 200,
-      body: mockPexelsPhotosSecondPageResponse,
+      body: mockPexelsEmptyPageResponse,
     });
 
     cy.findByRole("button", { name: /next/i }).should("be.visible").click();
