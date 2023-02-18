@@ -7,6 +7,7 @@ import { mockPexelsPhotosResponse } from "@/mockData/pexels";
 import Home, { getServerSideProps } from "@/pages/index";
 import { queryClient, render, screen, userEvent, waitFor } from "@/test-utils";
 import { ServerResponse } from "http";
+import { axe } from "jest-axe";
 import { GetServerSidePropsContext } from "next";
 import mockRouter from "next-router-mock";
 import { ParsedUrlQuery } from "querystring";
@@ -28,6 +29,19 @@ describe("Home", () => {
 
     expect(screen.getByText(firstPhotographer)).toBeInTheDocument();
     expect(screen.getByText(lastPhotographer)).toBeInTheDocument();
+  });
+
+  it("renders without axe violations", async () => {
+    const page = 1;
+    queryClient.setQueryData(
+      [USE_CURATED_PHOTOS_KEY, page],
+      mockCuratedPhotosResponse
+    );
+    const { container } = render(<Home />);
+
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
   });
 
   it("displays an error message if the request fails", async () => {

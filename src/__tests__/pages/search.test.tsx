@@ -7,6 +7,7 @@ import {
 import Search, { getServerSideProps } from "@/pages/search";
 import { queryClient, render, screen, userEvent, waitFor } from "@/test-utils";
 import { ServerResponse } from "http";
+import { axe } from "jest-axe";
 import { GetServerSidePropsContext } from "next";
 import mockRouter from "next-router-mock";
 import { ParsedUrlQuery } from "querystring";
@@ -35,6 +36,19 @@ describe("Search", () => {
 
     expect(screen.getByText(firstPhotographer)).toBeInTheDocument();
     expect(screen.getByText(lastPhotographer)).toBeInTheDocument();
+  });
+
+  it("renders without axe violations", async () => {
+    const page = 1;
+    queryClient.setQueryData(
+      [USE_PHOTO_SEARCH_KEY, testQuery, page],
+      mockPhotoSearchResponse
+    );
+    const { container } = render(<Search />);
+
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
   });
 
   it("displays an error message if the request fails", async () => {
