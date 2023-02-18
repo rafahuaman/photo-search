@@ -9,12 +9,14 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
+  Link,
   Stack,
   Text,
   useColorMode,
   useColorModeValue,
   VisuallyHidden,
 } from "@chakra-ui/react";
+import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import Container from "./Container";
@@ -55,7 +57,9 @@ export default function NavBar() {
           spacing={6}
         >
           <Text fontSize="xl" flexShrink={0}>
-            Photo Search
+            <Link as={NextLink} href="/">
+              Photo Search
+            </Link>
           </Text>
           <Box as="form" onSubmit={handleSubmit(onSubmit)} w="full">
             <FormControl>
