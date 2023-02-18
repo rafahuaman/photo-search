@@ -38,9 +38,24 @@ describe("Home", () => {
     );
     render(<Home />);
 
-    fetchMock.mockRejectedValueOnce(
-      JSON.stringify({ message: "Internal Server Error" })
+    fetchMock.mockRejectOnce(new Error("Internal server error."));
+    const user = userEvent.setup();
+    user.click(screen.getByRole("button", { name: /next/i }));
+
+    await waitFor(() =>
+      expect(screen.getByText(/oops! Something went wrong./i)).toBeVisible()
     );
+  });
+
+  it("displays the request returns something other than 200", async () => {
+    const page = 1;
+    queryClient.setQueryData(
+      [USE_CURATED_PHOTOS_KEY, page],
+      mockCuratedPhotosResponse
+    );
+    render(<Home />);
+
+    fetchMock.once("", { status: 429 });
     const user = userEvent.setup();
     user.click(screen.getByRole("button", { name: /next/i }));
 
