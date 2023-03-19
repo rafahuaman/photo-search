@@ -25,6 +25,9 @@ describe("/api/photos", () => {
             url: firstPhoto.src.large,
             photographerName: firstPhoto.photographer,
             photographerUrl: firstPhoto.photographer_url,
+            width: 4160,
+            height: 6240,
+            placeholderColor: "#7F6E64",
           },
           {
             id: secondPhoto.id,
@@ -32,6 +35,9 @@ describe("/api/photos", () => {
             url: secondPhoto.src.large,
             photographerName: secondPhoto.photographer,
             photographerUrl: secondPhoto.photographer_url,
+            width: 3888,
+            height: 5184,
+            placeholderColor: "#6C6258",
           },
         ],
       })

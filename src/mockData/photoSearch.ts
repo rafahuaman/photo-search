@@ -9,6 +9,9 @@ export const mockPhotoSearchResponse = {
       url: "https://images.pexels.com/photos/15426268/pexels-photo-15426268.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
       photographerName: "Carlo Obrien",
       photographerUrl: "https://www.pexels.com/@carlo-obrien-402486657",
+      width: 3024,
+      height: 3024,
+      placeholderColor: "#978E82",
     },
     {
       id: 15434796,
@@ -16,6 +19,9 @@ export const mockPhotoSearchResponse = {
       url: "https://images.pexels.com/photos/15434796/pexels-photo-15434796.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
       photographerName: "Lisa Fotios",
       photographerUrl: "https://www.pexels.com/@fotios-photos",
+      width: 3024,
+      height: 3024,
+      placeholderColor: "#978E82",
     },
     {
       id: 15436366,
@@ -23,6 +29,9 @@ export const mockPhotoSearchResponse = {
       url: "https://images.pexels.com/photos/15436366/pexels-photo-15436366.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
       photographerName: "Elena Rubtsova",
       photographerUrl: "https://www.pexels.com/@elenarubtso",
+      width: 3024,
+      height: 3024,
+      placeholderColor: "#978E82",
     },
     {
       id: 15443851,
@@ -30,6 +39,9 @@ export const mockPhotoSearchResponse = {
       url: "https://images.pexels.com/photos/15443851/pexels-photo-15443851.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
       photographerName: "Lisa Fotios",
       photographerUrl: "https://www.pexels.com/@fotios-photos",
+      width: 3024,
+      height: 3024,
+      placeholderColor: "#978E82",
     },
     {
       id: 15521516,
@@ -37,6 +49,9 @@ export const mockPhotoSearchResponse = {
       url: "https://images.pexels.com/photos/15521516/pexels-photo-15521516.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
       photographerName: "Artūras Kokorevas",
       photographerUrl: "https://www.pexels.com/@nematytaskadras",
+      width: 3024,
+      height: 3024,
+      placeholderColor: "#978E82",
     },
     {
       id: 15520856,
@@ -44,6 +59,9 @@ export const mockPhotoSearchResponse = {
       url: "https://images.pexels.com/photos/15520856/pexels-photo-15520856.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
       photographerName: "Artūras Kokorevas",
       photographerUrl: "https://www.pexels.com/@nematytaskadras",
+      width: 3024,
+      height: 3024,
+      placeholderColor: "#978E82",
     },
     {
       id: 15507817,
@@ -51,6 +69,9 @@ export const mockPhotoSearchResponse = {
       url: "https://images.pexels.com/photos/15507817/pexels-photo-15507817.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
       photographerName: "Işıl Agc",
       photographerUrl: "https://www.pexels.com/@imagescosy",
+      width: 3024,
+      height: 3024,
+      placeholderColor: "#978E82",
     },
     {
       id: 15418150,
@@ -58,6 +79,9 @@ export const mockPhotoSearchResponse = {
       url: "https://images.pexels.com/photos/15418150/pexels-photo-15418150.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
       photographerName: "Lisa Fotios",
       photographerUrl: "https://www.pexels.com/@fotios-photos",
+      width: 3024,
+      height: 3024,
+      placeholderColor: "#978E82",
     },
     {
       id: 13282876,
@@ -65,6 +89,9 @@ export const mockPhotoSearchResponse = {
       url: "https://images.pexels.com/photos/13282876/pexels-photo-13282876.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
       photographerName: "Kássia Melo",
       photographerUrl: "https://www.pexels.com/@kassiamelox",
+      width: 3024,
+      height: 3024,
+      placeholderColor: "#978E82",
     },
     {
       id: 13279267,
@@ -72,6 +99,9 @@ export const mockPhotoSearchResponse = {
       url: "https://images.pexels.com/photos/13279267/pexels-photo-13279267.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
       photographerName: "Vladislav Nahorny",
       photographerUrl: "https://www.pexels.com/@vladislav-nahorny-171529149",
+      width: 3024,
+      height: 3024,
+      placeholderColor: "#978E82",
     },
   ],
 };
@@ -87,6 +117,9 @@ export const mockPhotoSearchSecondPageResponse = {
       url: "https://images.pexels.com/photos/15338211/pexels-photo-15338211.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
       photographerName: "Alina Levkovich",
       photographerUrl: "https://www.pexels.com/@alina-levkovich-211351037",
+      width: 3024,
+      height: 3024,
+      placeholderColor: "#978E82",
     },
     {
       id: 15332222,
@@ -94,6 +127,9 @@ export const mockPhotoSearchSecondPageResponse = {
       url: "https://images.pexels.com/photos/15332222/pexels-photo-15332222.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
       photographerName: "Ozan Çulha",
       photographerUrl: "https://www.pexels.com/@ozanculha",
+      width: 3024,
+      height: 3024,
+      placeholderColor: "#978E82",
     },
     {
       id: 15327259,
@@ -101,6 +137,9 @@ export const mockPhotoSearchSecondPageResponse = {
       url: "https://images.pexels.com/photos/15327259/pexels-photo-15327259.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
       photographerName: "Yura Forrat",
       photographerUrl: "https://www.pexels.com/@yuraforrat",
+      width: 3024,
+      height: 3024,
+      placeholderColor: "#978E82",
     },
     {
       id: 15316463,
@@ -108,6 +147,9 @@ export const mockPhotoSearchSecondPageResponse = {
       url: "https://images.pexels.com/photos/15316463/pexels-photo-15316463.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
       photographerName: "Alina Skazka",
       photographerUrl: "https://www.pexels.com/@alinaskazka",
+      width: 3024,
+      height: 3024,
+      placeholderColor: "#978E82",
     },
     {
       id: 15429700,
@@ -115,6 +157,9 @@ export const mockPhotoSearchSecondPageResponse = {
       url: "https://images.pexels.com/photos/15429700/pexels-photo-15429700.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
       photographerName: "Carlo Obrien",
       photographerUrl: "https://www.pexels.com/@carlo-obrien-402486657",
+      width: 3024,
+      height: 3024,
+      placeholderColor: "#978E82",
     },
     {
       id: 15299026,
@@ -122,6 +167,9 @@ export const mockPhotoSearchSecondPageResponse = {
       url: "https://images.pexels.com/photos/15299026/pexels-photo-15299026.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
       photographerName: "joao Guerreiro",
       photographerUrl: "https://www.pexels.com/@gunas4life",
+      width: 3024,
+      height: 3024,
+      placeholderColor: "#978E82",
     },
     {
       id: 15419257,
@@ -129,6 +177,9 @@ export const mockPhotoSearchSecondPageResponse = {
       url: "https://images.pexels.com/photos/15419257/pexels-photo-15419257.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
       photographerName: "Beyzaa Yurtkuran",
       photographerUrl: "https://www.pexels.com/@beyzaa-yurtkuran-279977530",
+      width: 3024,
+      height: 3024,
+      placeholderColor: "#978E82",
     },
     {
       id: 15418845,
@@ -136,6 +187,9 @@ export const mockPhotoSearchSecondPageResponse = {
       url: "https://images.pexels.com/photos/15418845/pexels-photo-15418845.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
       photographerName: "Вадим Биць",
       photographerUrl: "https://www.pexels.com/@214985283",
+      width: 3024,
+      height: 3024,
+      placeholderColor: "#978E82",
     },
     {
       id: 15416737,
@@ -143,6 +197,9 @@ export const mockPhotoSearchSecondPageResponse = {
       url: "https://images.pexels.com/photos/15416737/pexels-photo-15416737.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
       photographerName: "Thiago Andrade",
       photographerUrl: "https://www.pexels.com/@thiago-andrade-434377515",
+      width: 3024,
+      height: 3024,
+      placeholderColor: "#978E82",
     },
     {
       id: 15387593,
@@ -150,6 +207,9 @@ export const mockPhotoSearchSecondPageResponse = {
       url: "https://images.pexels.com/photos/15387593/pexels-photo-15387593.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
       photographerName: "Somewherewith Tom",
       photographerUrl: "https://www.pexels.com/@somewherewith-tom-440746597",
+      width: 3024,
+      height: 3024,
+      placeholderColor: "#978E82",
     },
   ],
 };

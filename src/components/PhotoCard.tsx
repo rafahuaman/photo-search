@@ -16,9 +16,10 @@ type PhotoCardProps = {
   photographerUrl: string;
   alt: string;
   priority: boolean;
+  originalWidth: number;
+  originalHeight: number;
 };
-const PHOTO_CARD_IMAGE_WIDTH = 940;
-const PHOTO_CARD_IMAGE_HEIGHT = 650;
+const PHOTO_CARD_IMAGE_WIDTH = 460;
 
 function PhotoCard({
   id,
@@ -27,7 +28,12 @@ function PhotoCard({
   photographerUrl,
   alt,
   priority,
+  originalWidth,
+  originalHeight,
 }: PhotoCardProps) {
+  const imageRatio = originalWidth / originalHeight;
+  const height = PHOTO_CARD_IMAGE_WIDTH / imageRatio;
+
   return (
     <Box
       as="article"
@@ -41,7 +47,7 @@ function PhotoCard({
         src={url}
         alt={alt}
         width={PHOTO_CARD_IMAGE_WIDTH}
-        height={PHOTO_CARD_IMAGE_HEIGHT}
+        height={height}
         priority={priority}
       />
 

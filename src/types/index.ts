@@ -8,6 +8,9 @@ type Photo = {
   url: string;
   photographerName: string;
   photographerUrl: string;
+  width: number;
+  height: number;
+  placeholderColor: string;
 };
 
 export type PhotosResponse = {

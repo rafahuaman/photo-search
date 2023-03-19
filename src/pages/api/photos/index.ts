@@ -43,6 +43,9 @@ export async function fetchCuratedPhotosServer(
       url: photo.src.large,
       photographerName: photo.photographer,
       photographerUrl: photo.photographer_url,
+      width: photo.width,
+      height: photo.height,
+      placeholderColor: photo.avg_color || "",
     })),
   };
   return result;

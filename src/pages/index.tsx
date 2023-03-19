@@ -49,7 +49,18 @@ export default function Home() {
       <VStack spacing={10}>
         <VStack spacing={10}>
           {data?.photos.map(
-            ({ id, url, photographerName, photographerUrl, alt }, index) => (
+            (
+              {
+                id,
+                url,
+                photographerName,
+                photographerUrl,
+                alt,
+                width,
+                height,
+              },
+              index
+            ) => (
               <Fade key={id} in>
                 <PhotoCard
                   id={id}
@@ -58,6 +69,8 @@ export default function Home() {
                   photographerUrl={photographerUrl}
                   alt={alt}
                   priority={index === 0}
+                  originalWidth={width}
+                  originalHeight={height}
                 />
               </Fade>
             )
