@@ -2,7 +2,7 @@
 
 Hello! 👋🏽 I'm Rafael Huaman.
 
-This is my submission of the Photo Search exercise.
+This is my solution of the [Photo Search exercise](docs/00-exercise-description.md).
 
 I approached this exercise as an actual project, ensuring the application was well-tested and included build and deployment pipelines.
 
@@ -20,3 +20,6 @@ I also added an Improvements section to capture things I didn't do but identifie
 - [System Overview](docs/02-system-overview.md)
 - [Testing Guidelines](docs/03-testing-guidelines.md)
 - [Improvements](docs/04-improvements.md)
+- [Exercise Description](docs/00-exercise-description.md)
+
+## Exercise
