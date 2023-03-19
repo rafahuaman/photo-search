@@ -1,3 +1,4 @@
+import { hexColorDataUrl } from "@/utils/hexColorDataUrl";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
 import {
   Box,
@@ -18,6 +19,7 @@ type PhotoCardProps = {
   priority: boolean;
   originalWidth: number;
   originalHeight: number;
+  placeholderColor: string;
 };
 const PHOTO_CARD_IMAGE_WIDTH = 460;
 
@@ -30,6 +32,7 @@ function PhotoCard({
   priority,
   originalWidth,
   originalHeight,
+  placeholderColor,
 }: PhotoCardProps) {
   const imageRatio = originalWidth / originalHeight;
   const height = PHOTO_CARD_IMAGE_WIDTH / imageRatio;
@@ -49,6 +52,8 @@ function PhotoCard({
         width={PHOTO_CARD_IMAGE_WIDTH}
         height={height}
         priority={priority}
+        placeholder="blur"
+        blurDataURL={hexColorDataUrl(placeholderColor)}
       />
 
       <Flex p="6" justifyContent="space-between" alignContent="center">

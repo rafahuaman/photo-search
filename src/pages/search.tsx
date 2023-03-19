@@ -70,7 +70,16 @@ function SearchResults() {
       <VStack spacing={10}>
         {data?.photos.map(
           (
-            { id, url, photographerName, photographerUrl, alt, width, height },
+            {
+              id,
+              url,
+              photographerName,
+              photographerUrl,
+              alt,
+              width,
+              height,
+              placeholderColor,
+            },
             index
           ) => (
             <Fade key={id} in>
@@ -83,6 +92,7 @@ function SearchResults() {
                 priority={index === 0}
                 originalWidth={width}
                 originalHeight={height}
+                placeholderColor={placeholderColor}
               />
             </Fade>
           )

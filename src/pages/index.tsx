@@ -58,6 +58,7 @@ export default function Home() {
                 alt,
                 width,
                 height,
+                placeholderColor,
               },
               index
             ) => (
@@ -71,6 +72,7 @@ export default function Home() {
                   priority={index === 0}
                   originalWidth={width}
                   originalHeight={height}
+                  placeholderColor={placeholderColor}
                 />
               </Fade>
             )
