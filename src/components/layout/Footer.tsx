@@ -39,7 +39,7 @@ export default function Footer() {
             </ButtonGroup>
           </Stack>
           <Text fontSize="sm" color="subtle">
-            By Rafael Huaman for Rokt
+            By Rafael Huaman
           </Text>
         </Stack>
       </Container>
