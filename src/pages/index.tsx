@@ -8,6 +8,7 @@ import { dehydrate, QueryClient, useQueryClient } from "@tanstack/react-query";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 import { fetchCuratedPhotosServer } from "./api/photos";
 
 export default function Home() {
@@ -18,8 +19,11 @@ export default function Home() {
   const showPrevious = page > 1;
   const showNext = data?.hasNext;
 
+  useEffect(() => {
+    prefetchCuratedPhotos(queryClient, page + 1);
+  }, [page, queryClient]);
+
   if (isError) return null;
-  prefetchCuratedPhotos(queryClient, page + 1);
 
   const handleNext = () => {
     router.push({ pathname: "/", query: { page: page + 1 } }, undefined, {

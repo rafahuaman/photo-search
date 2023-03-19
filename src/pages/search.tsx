@@ -20,6 +20,7 @@ import { dehydrate, QueryClient, useQueryClient } from "@tanstack/react-query";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 import { fetchPhotoSearchServer } from "./api/photos/search";
 
 function SearchResults() {
@@ -31,9 +32,11 @@ function SearchResults() {
   const showNext = data?.hasNext;
   const queryClient = useQueryClient();
 
-  if (isError) return null;
+  useEffect(() => {
+    prefetchPhotoSearch(queryClient, searchQuery, page + 1);
+  }, [page, queryClient, searchQuery]);
 
-  prefetchPhotoSearch(queryClient, searchQuery, page + 1);
+  if (isError) return null;
 
   const handleNext = () => {
     router.push(
