@@ -45,6 +45,7 @@ function PhotoCard({
       borderWidth="1px"
       shadow="lg"
       data-testid={`photo-card-${id}`}
+      sx={{ "break-inside": "avoid" }}
     >
       <Image
         src={url}

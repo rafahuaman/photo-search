@@ -3,7 +3,7 @@ import useCuratedPhotos, {
   prefetchCuratedPhotos,
   USE_CURATED_PHOTOS_KEY,
 } from "@/hooks/useCuratedPhotos";
-import { Button, ButtonGroup, Fade, VStack } from "@chakra-ui/react";
+import { Box, Button, ButtonGroup, Fade, VStack } from "@chakra-ui/react";
 import { dehydrate, QueryClient, useQueryClient } from "@tanstack/react-query";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
@@ -47,7 +47,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <VStack spacing={10}>
-        <VStack spacing={10}>
+        <Box sx={{ columnCount: [1, 2, 3], columnGap: 8 }}>
           {data?.photos.map(
             (
               {
@@ -62,22 +62,24 @@ export default function Home() {
               },
               index
             ) => (
-              <Fade key={id} in>
-                <PhotoCard
-                  id={id}
-                  url={url}
-                  photographerName={photographerName}
-                  photographerUrl={photographerUrl}
-                  alt={alt}
-                  priority={index === 0}
-                  originalWidth={width}
-                  originalHeight={height}
-                  placeholderColor={placeholderColor}
-                />
-              </Fade>
+              <Box key={id} mb={8}>
+                <Fade in>
+                  <PhotoCard
+                    id={id}
+                    url={url}
+                    photographerName={photographerName}
+                    photographerUrl={photographerUrl}
+                    alt={alt}
+                    priority={index < 3}
+                    originalWidth={width}
+                    originalHeight={height}
+                    placeholderColor={placeholderColor}
+                  />
+                </Fade>
+              </Box>
             )
           )}
-        </VStack>
+        </Box>
 
         <ButtonGroup variant="outline" colorScheme="teal" spacing="6">
           {showPrevious && <Button onClick={handlePrevious}>Previous</Button>}

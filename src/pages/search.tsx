@@ -67,7 +67,7 @@ function SearchResults() {
   };
   return (
     <VStack spacing={10}>
-      <VStack spacing={10}>
+      <Box sx={{ columnCount: [1, 2, 3], columnGap: 8 }}>
         {data?.photos.map(
           (
             {
@@ -82,22 +82,24 @@ function SearchResults() {
             },
             index
           ) => (
-            <Fade key={id} in>
-              <PhotoCard
-                id={id}
-                url={url}
-                photographerName={photographerName}
-                photographerUrl={photographerUrl}
-                alt={alt}
-                priority={index === 0}
-                originalWidth={width}
-                originalHeight={height}
-                placeholderColor={placeholderColor}
-              />
-            </Fade>
+            <Box key={id} mb={8}>
+              <Fade in>
+                <PhotoCard
+                  id={id}
+                  url={url}
+                  photographerName={photographerName}
+                  photographerUrl={photographerUrl}
+                  alt={alt}
+                  priority={index === 0}
+                  originalWidth={width}
+                  originalHeight={height}
+                  placeholderColor={placeholderColor}
+                />
+              </Fade>
+            </Box>
           )
         )}
-      </VStack>
+      </Box>
 
       <ButtonGroup variant="outline" colorScheme="teal" spacing="6">
         {showPrevious && <Button onClick={handlePrevious}>Previous</Button>}
