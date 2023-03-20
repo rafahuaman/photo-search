@@ -1,5 +1,5 @@
 import { Photo } from "@/types";
-import { Fade, HStack, VStack } from "@chakra-ui/react";
+import { Fade, SimpleGrid, VStack } from "@chakra-ui/react";
 import PhotoCard from "./PhotoCard";
 
 type MasonryColumnProps = {
@@ -71,11 +71,11 @@ function MasonryPhotoLayout({ photos }: MasonryLayoutProps) {
   const [column1, column2, column3] =
     buildThreeColumnsInHorizontalOrder(photos);
   return (
-    <HStack wrap={"wrap"} spacing={8} align="start" justify={"center"}>
+    <SimpleGrid columns={[1, 2, 3]} spacing={8}>
       <MasonryColumn photos={column1} />
       <MasonryColumn photos={column2} />
       <MasonryColumn photos={column3} />
-    </HStack>
+    </SimpleGrid>
   );
 }
 
