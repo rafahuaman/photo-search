@@ -2,7 +2,7 @@ export type ErrorResponse = {
   message: string;
 };
 
-type Photo = {
+export type Photo = {
   id: number;
   alt: string;
   url: string;
