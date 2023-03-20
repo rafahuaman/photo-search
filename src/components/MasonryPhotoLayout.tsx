@@ -71,7 +71,7 @@ function MasonryPhotoLayout({ photos }: MasonryLayoutProps) {
   const [column1, column2, column3] =
     buildThreeColumnsInHorizontalOrder(photos);
   return (
-    <HStack wrap={"wrap"} spacing={8} align="start">
+    <HStack wrap={"wrap"} spacing={8} align="start" justify={"center"}>
       <MasonryColumn photos={column1} />
       <MasonryColumn photos={column2} />
       <MasonryColumn photos={column3} />
