@@ -32,5 +32,3 @@ I also added an Improvements section to capture things I didn't do but identifie
 - [Testing Guidelines](docs/03-testing-guidelines.md)
 - [Improvements](docs/04-improvements.md)
 - [Exercise Description](docs/00-exercise-description.md)
-
-## Exercise
