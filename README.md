@@ -23,7 +23,7 @@ I also added an Improvements section to capture things I didn't do but identifie
 
 ## Quick Links
 
-- [Live App](https://pexels-ten.vercel.app/)
+- [Live App](https://pexels-ten.vercel.app/) (cold start)
 
 ## Project Documentation
 
