@@ -10,5 +10,5 @@
   "editor.codeActionsOnSave": {
     "source.organizeImports": true
   },
-  "cSpell.words": ["chakra", "maxage", "Pexels", "tanstack", "testid", "VERCEL"]
+  "typescript.tsdk": "node_modules/typescript/lib"
 }
